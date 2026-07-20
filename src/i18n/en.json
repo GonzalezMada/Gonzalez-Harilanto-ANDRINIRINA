@@ -1,0 +1,82 @@
+{
+  "site": {
+    "title": "Gonzalez Harilanto ANDRINIRINA",
+    "description": "Personal portfolio — STEM education, AI engineering, and computer vision research."
+  },
+  "nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "blog": "Blog",
+    "leadership": "Leadership",
+    "downloadCv": "Download CV",
+    "skipToContent": "Skip to main content"
+  },
+  "languageSwitcher": {
+    "label": "Language",
+    "fr": "FR",
+    "en": "EN"
+  },
+  "home": {
+    "heroEyebrow": "Portfolio",
+    "heroTitle": "Gonzalez Harilanto ANDRINIRINA",
+    "heroSubtitle": "STEM educator, AI engineer/developer, and computer vision research student.",
+    "heroCta": "View projects",
+    "facetsHeading": "Three facets, one mission",
+    "facets": {
+      "stemEducator": {
+        "label": "STEM Educator",
+        "summary": "Mentoring and guiding young people toward science, technology, and engineering."
+      },
+      "aiEngineer": {
+        "label": "AI Engineer / Developer",
+        "summary": "Designing and building applied artificial intelligence systems."
+      },
+      "cvResearcher": {
+        "label": "Computer Vision Research Student",
+        "summary": "Researching computer vision models and their real-world applications."
+      }
+    },
+    "timelineHeading": "Journey",
+    "timeline": {
+      "milestone1": {
+        "year": "2022",
+        "label": "Began STEM mentoring and youth outreach work."
+      },
+      "milestone2": {
+        "year": "2023",
+        "label": "Built applied AI and software engineering projects."
+      },
+      "milestone3": {
+        "year": "2024",
+        "label": "Started computer vision research as a research student."
+      }
+    }
+  },
+  "projects": {
+    "heading": "Projects",
+    "intro": "A selection of technical and research projects.",
+    "filterAllLabel": "All",
+    "filterGroupLabel": "Filter by category",
+    "emptyState": "No projects match this filter.",
+    "technologiesLabel": "Technologies",
+    "viewProjectLabel": "View project"
+  },
+  "blog": {
+    "heading": "Blog",
+    "intro": "Notes and articles on AI, computer vision, and STEM education.",
+    "emptyState": "No articles yet.",
+    "readMoreLabel": "Read more",
+    "backToListLabel": "Back to articles"
+  },
+  "leadership": {
+    "heading": "Leadership",
+    "intro": "Mentoring and leadership experiences, and their human impact."
+  },
+  "cv": {
+    "downloadLabel": "Download CV",
+    "unavailable": "The CV is temporarily unavailable."
+  },
+  "common": {
+    "externalLinkNewTab": "(opens in a new tab)"
+  }
+}

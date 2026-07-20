@@ -1,0 +1,82 @@
+{
+  "site": {
+    "title": "Gonzalez Harilanto ANDRINIRINA",
+    "description": "Portfolio personnel — éducation STEM, ingénierie IA et recherche en vision artificielle."
+  },
+  "nav": {
+    "home": "Accueil",
+    "projects": "Projets",
+    "blog": "Blog",
+    "leadership": "Leadership",
+    "downloadCv": "Télécharger le CV",
+    "skipToContent": "Aller au contenu principal"
+  },
+  "languageSwitcher": {
+    "label": "Langue",
+    "fr": "FR",
+    "en": "EN"
+  },
+  "home": {
+    "heroEyebrow": "Portfolio",
+    "heroTitle": "Gonzalez Harilanto ANDRINIRINA",
+    "heroSubtitle": "Éducateur STEM, ingénieur/développeur IA et étudiant-chercheur en vision artificielle.",
+    "heroCta": "Voir les projets",
+    "facetsHeading": "Trois facettes, une même mission",
+    "facets": {
+      "stemEducator": {
+        "label": "Éducateur STEM",
+        "summary": "Encadrement et mentorat de jeunes vers les sciences, la technologie et l'ingénierie."
+      },
+      "aiEngineer": {
+        "label": "Ingénieur / Développeur IA",
+        "summary": "Conception et développement de systèmes d'intelligence artificielle appliqués."
+      },
+      "cvResearcher": {
+        "label": "Étudiant-chercheur en vision artificielle",
+        "summary": "Recherche sur les modèles de vision par ordinateur et leurs applications."
+      }
+    },
+    "timelineHeading": "Parcours",
+    "timeline": {
+      "milestone1": {
+        "year": "2022",
+        "label": "Débuts dans l'encadrement STEM et le mentorat de jeunes."
+      },
+      "milestone2": {
+        "year": "2023",
+        "label": "Développement de projets d'ingénierie et d'intelligence artificielle appliquée."
+      },
+      "milestone3": {
+        "year": "2024",
+        "label": "Recherche en vision par ordinateur en tant qu'étudiant-chercheur."
+      }
+    }
+  },
+  "projects": {
+    "heading": "Projets",
+    "intro": "Une sélection de projets techniques et de recherche.",
+    "filterAllLabel": "Tous",
+    "filterGroupLabel": "Filtrer par catégorie",
+    "emptyState": "Aucun projet ne correspond à ce filtre.",
+    "technologiesLabel": "Technologies",
+    "viewProjectLabel": "Voir le projet"
+  },
+  "blog": {
+    "heading": "Blog",
+    "intro": "Notes et articles sur l'IA, la vision par ordinateur et l'éducation STEM.",
+    "emptyState": "Aucun article pour le moment.",
+    "readMoreLabel": "Lire la suite",
+    "backToListLabel": "Retour aux articles"
+  },
+  "leadership": {
+    "heading": "Leadership",
+    "intro": "Expériences d'encadrement et de mentorat, et leur impact humain."
+  },
+  "cv": {
+    "downloadLabel": "Télécharger le CV",
+    "unavailable": "Le CV n'est pas disponible pour le moment."
+  },
+  "common": {
+    "externalLinkNewTab": "(ouvre un nouvel onglet)"
+  }
+}

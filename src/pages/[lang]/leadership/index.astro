@@ -1,0 +1,42 @@
+---
+import { getCollection } from 'astro:content';
+import SiteLayout from '../../../components/templates/SiteLayout.astro';
+import LeadershipList from '../../../components/organisms/LeadershipList.astro';
+import { LOCALES, type Locale } from '../../../i18n/schema';
+import { getTranslator } from '../../../lib/i18n';
+import { counterpartListPath } from '../../../lib/routing';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Locale };
+const t = getTranslator(lang);
+
+const allLeadership = await getCollection('leadership');
+const entries = allLeadership
+  .filter((entry) => entry.id.startsWith(`${lang}/`))
+  .map((entry) => ({
+    organization: entry.data.organization,
+    role: entry.data.role,
+    impact: entry.data.impact,
+    period: entry.data.period,
+  }));
+
+const alternateLinks = {
+  fr: counterpartListPath('fr', 'leadership'),
+  en: counterpartListPath('en', 'leadership'),
+};
+---
+
+<SiteLayout
+  locale={lang}
+  currentSection="leadership"
+  alternateLinks={alternateLinks}
+  title={`${t('leadership.heading')} — ${t('site.title')}`}
+  description={t('leadership.intro')}
+>
+  <h1 class="mb-2 font-heading text-3xl font-bold text-foreground">{t('leadership.heading')}</h1>
+  <p class="mb-8 text-muted-foreground">{t('leadership.intro')}</p>
+  <LeadershipList entries={entries} />
+</SiteLayout>

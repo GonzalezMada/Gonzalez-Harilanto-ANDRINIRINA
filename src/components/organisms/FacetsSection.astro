@@ -1,0 +1,31 @@
+---
+import FacetCard from '../molecules/FacetCard.astro';
+import { FACETS } from '../../data/facets';
+import type { Locale } from '../../i18n/schema';
+import { getTranslator } from '../../lib/i18n';
+import { localePath } from '../../lib/routing';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getTranslator(locale);
+---
+
+<section aria-labelledby="facets-heading" class="py-8">
+  <h2 id="facets-heading" class="mb-6 font-heading text-2xl font-semibold text-foreground">
+    {t('home.facetsHeading')}
+  </h2>
+  <div class="grid gap-6 md:grid-cols-3">
+    {
+      FACETS.map((facet) => (
+        <FacetCard
+          href={localePath(locale, facet.linkSection)}
+          label={t(facet.labelKey)}
+          summary={t(facet.summaryKey)}
+        />
+      ))
+    }
+  </div>
+</section>

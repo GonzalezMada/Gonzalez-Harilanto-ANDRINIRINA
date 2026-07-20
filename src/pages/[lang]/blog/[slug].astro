@@ -1,0 +1,55 @@
+---
+import { getCollection, render } from 'astro:content';
+import SiteLayout from '../../../components/templates/SiteLayout.astro';
+import BlogArticleLayout from '../../../components/templates/BlogArticleLayout.astro';
+import { LOCALES, type Locale } from '../../../i18n/schema';
+import { getTranslator } from '../../../lib/i18n';
+import { localePath, resolveDetailCounterpartPath, type TranslatableEntry } from '../../../lib/routing';
+
+export async function getStaticPaths() {
+  const allArticles = await getCollection('blog');
+
+  return LOCALES.flatMap((lang) =>
+    allArticles
+      .filter((entry) => entry.id.startsWith(`${lang}/`))
+      .map((entry) => ({
+        params: { lang, slug: entry.id.slice(lang.length + 1) },
+        props: { entry },
+      })),
+  );
+}
+
+const { lang } = Astro.params as { lang: Locale };
+const { entry } = Astro.props as Awaited<ReturnType<typeof getStaticPaths>>[number]['props'];
+const t = getTranslator(lang);
+const { Content } = await render(entry);
+
+const allArticles = await getCollection('blog');
+const targetEntriesFor = (locale: Locale): TranslatableEntry[] =>
+  allArticles
+    .filter((item) => item.id.startsWith(`${locale}/`))
+    .map((item) => ({ translationKey: item.data.translationKey, slug: item.id.slice(locale.length + 1) }));
+
+const alternateLinks = {
+  fr: resolveDetailCounterpartPath('fr', 'blog', entry.data.translationKey, targetEntriesFor('fr')),
+  en: resolveDetailCounterpartPath('en', 'blog', entry.data.translationKey, targetEntriesFor('en')),
+};
+---
+
+<SiteLayout
+  locale={lang}
+  currentSection="blog"
+  alternateLinks={alternateLinks}
+  title={`${entry.data.title} — ${t('site.title')}`}
+  description={entry.data.summary}
+>
+  <BlogArticleLayout
+    locale={lang}
+    title={entry.data.title}
+    date={entry.data.date}
+    tags={entry.data.tags}
+    backToListHref={localePath(lang, 'blog')}
+  >
+    <Content />
+  </BlogArticleLayout>
+</SiteLayout>

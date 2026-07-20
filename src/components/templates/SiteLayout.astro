@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../organisms/Header.astro';
+import Footer from '../organisms/Footer.astro';
+import type { Locale } from '../../i18n/schema';
+import type { SectionRoute } from '../../lib/routing';
+
+interface Props {
+  locale: Locale;
+  currentSection: SectionRoute;
+  alternateLinks: Record<Locale, string>;
+  title: string;
+  description: string;
+}
+
+const { locale, currentSection, alternateLinks, title, description } = Astro.props;
+---
+
+<BaseLayout locale={locale} title={title} description={description}>
+  <Header locale={locale} currentSection={currentSection} alternateLinks={alternateLinks} />
+  <main id="main-content" class="mx-auto max-w-6xl px-4 py-10">
+    <slot />
+  </main>
+  <Footer locale={locale} />
+</BaseLayout>

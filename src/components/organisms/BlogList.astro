@@ -1,0 +1,44 @@
+---
+import BlogCard from '../molecules/BlogCard.astro';
+import type { Locale } from '../../i18n/schema';
+import { getTranslator } from '../../lib/i18n';
+import { sortByDateDesc, isEmpty } from '../../lib/blogList';
+
+interface BlogItem {
+  slug: string;
+  title: string;
+  date: Date;
+  summary: string;
+  tags: string[];
+}
+
+interface Props {
+  locale: Locale;
+  articles: BlogItem[];
+}
+
+const { locale, articles } = Astro.props;
+const t = getTranslator(locale);
+const sorted = sortByDateDesc(articles);
+---
+
+{
+  isEmpty(sorted) ? (
+    <p class="py-8 text-center text-muted-foreground" role="status">
+      {t('blog.emptyState')}
+    </p>
+  ) : (
+    <div class="flex flex-col gap-6">
+      {sorted.map((article) => (
+        <BlogCard
+          locale={locale}
+          href={`${article.slug}/`}
+          title={article.title}
+          date={article.date}
+          summary={article.summary}
+          tags={article.tags}
+        />
+      ))}
+    </div>
+  )
+}

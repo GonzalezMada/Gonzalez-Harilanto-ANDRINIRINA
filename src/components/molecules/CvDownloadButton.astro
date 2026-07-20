@@ -1,0 +1,19 @@
+---
+import Button from '../atoms/Button.astro';
+import type { Locale } from '../../i18n/schema';
+import { getTranslator } from '../../lib/i18n';
+import { withBase } from '../../lib/routing';
+
+interface Props {
+  locale: Locale;
+  class?: string;
+}
+
+const { locale, class: className = '' } = Astro.props;
+const t = getTranslator(locale);
+const cvHref = withBase(`/cv/cv-${locale}.pdf`);
+---
+
+<Button href={cvHref} download variant="secondary" class={className}>
+  {t('cv.downloadLabel')}
+</Button>

@@ -1,0 +1,54 @@
+---
+import Logo from '../atoms/Logo.astro';
+import NavLink from '../atoms/NavLink.astro';
+import LanguageSwitcher from '../molecules/LanguageSwitcher.astro';
+import CvDownloadButton from '../molecules/CvDownloadButton.astro';
+import type { Locale } from '../../i18n/schema';
+import type { SectionRoute } from '../../lib/routing';
+import { localePath } from '../../lib/routing';
+import { getTranslator } from '../../lib/i18n';
+
+interface Props {
+  locale: Locale;
+  currentSection: SectionRoute;
+  alternateLinks: Record<Locale, string>;
+}
+
+const { locale, currentSection, alternateLinks } = Astro.props;
+const t = getTranslator(locale);
+
+const navItems: { section: SectionRoute; label: string }[] = [
+  { section: 'home', label: t('nav.home') },
+  { section: 'projects', label: t('nav.projects') },
+  { section: 'blog', label: t('nav.blog') },
+  { section: 'leadership', label: t('nav.leadership') },
+];
+---
+
+<header class="border-b border-border bg-background">
+  <a
+    href="#main-content"
+    class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+  >
+    {t('nav.skipToContent')}
+  </a>
+  <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-4">
+    <Logo href={localePath(locale, 'home')} label={t('site.title')} />
+    <nav aria-label={t('nav.home')} class="flex flex-wrap items-center gap-1">
+      {
+        navItems.map((item) => (
+          <NavLink
+            href={localePath(locale, item.section)}
+            active={item.section === currentSection}
+          >
+            {item.label}
+          </NavLink>
+        ))
+      }
+    </nav>
+    <div class="flex items-center gap-3">
+      <CvDownloadButton locale={locale} />
+      <LanguageSwitcher locale={locale} alternateLinks={alternateLinks} />
+    </div>
+  </div>
+</header>

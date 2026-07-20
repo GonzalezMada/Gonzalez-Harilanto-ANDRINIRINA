@@ -1,0 +1,29 @@
+---
+import LeadershipCard from '../molecules/LeadershipCard.astro';
+
+interface LeadershipItem {
+  organization: string;
+  role: string;
+  impact: string;
+  period?: string;
+}
+
+interface Props {
+  entries: LeadershipItem[];
+}
+
+const { entries } = Astro.props;
+---
+
+<div class="flex flex-col gap-6">
+  {
+    entries.map((entry) => (
+      <LeadershipCard
+        organization={entry.organization}
+        role={entry.role}
+        impact={entry.impact}
+        period={entry.period}
+      />
+    ))
+  }
+</div>

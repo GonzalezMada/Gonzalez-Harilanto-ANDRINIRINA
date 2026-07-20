@@ -1,0 +1,41 @@
+---
+import type { Locale } from '../../i18n/schema';
+import { getTranslator } from '../../lib/i18n';
+
+interface Props {
+  locale: Locale;
+  title: string;
+  date: Date;
+  tags: string[];
+  backToListHref: string;
+}
+
+const { locale, title, date, tags, backToListHref } = Astro.props;
+const t = getTranslator(locale);
+const formattedDate = new Intl.DateTimeFormat(locale === 'fr' ? 'fr-FR' : 'en-US', {
+  dateStyle: 'long',
+}).format(date);
+---
+
+<article>
+  <a
+    href={backToListHref}
+    class="mb-6 inline-flex min-h-11 items-center text-sm font-semibold text-primary transition-colors hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+  >
+    &larr; {t('blog.backToListLabel')}
+  </a>
+  <header class="mb-8">
+    <time datetime={date.toISOString()} class="text-sm font-medium text-accent">{formattedDate}</time>
+    <h1 class="mt-2 font-heading text-3xl font-bold text-foreground">{title}</h1>
+    <ul class="mt-4 flex flex-wrap gap-2">
+      {
+        tags.map((tag) => (
+          <li class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-foreground">{tag}</li>
+        ))
+      }
+    </ul>
+  </header>
+  <div class="prose prose-slate max-w-none">
+    <slot />
+  </div>
+</article>

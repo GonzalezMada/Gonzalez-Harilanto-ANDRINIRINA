@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Crimson+Pro:wght@400;500;600;700&display=swap');
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+/*
+ * Single design-token source (constitution Principle VI).
+ * Palette + typography chosen via the ui-ux-pro-max skill for a credible
+ * tech/research professional profile: institutional navy + a restrained
+ * research-gold accent (not a generic startup-vibrant palette), paired with
+ * an academic serif for headings and a highly-legible accessible sans for
+ * body copy. Layout discipline follows the "Swiss Modernism 2.0" style
+ * (grid-based, mathematical spacing, single accent, minimal decoration).
+ * Every component MUST consume these tokens rather than raw hex values.
+ */
+@theme {
+  --font-heading: 'Crimson Pro', ui-serif, Georgia, serif;
+  --font-body: 'Atkinson Hyperlegible', ui-sans-serif, system-ui, sans-serif;
+
+  --color-primary: #1e3a5f;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #2563eb;
+  --color-accent: #a16207;
+  --color-accent-foreground: #ffffff;
+  --color-background: #f8fafc;
+  --color-foreground: #0f172a;
+  --color-muted: #e9eef5;
+  --color-muted-foreground: #475569;
+  --color-border: #cbd5e1;
+  --color-destructive: #dc2626;
+  --color-ring: #1e3a5f;
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+}
+
+:root[data-theme='dark'] {
+  --color-primary: #7ea6d8;
+  --color-primary-foreground: #0f172a;
+  --color-secondary: #60a5fa;
+  --color-accent: #d9a441;
+  --color-accent-foreground: #0f172a;
+  --color-background: #0b1220;
+  --color-foreground: #f1f5f9;
+  --color-muted: #16223a;
+  --color-muted-foreground: #94a3b8;
+  --color-border: #2a3a55;
+  --color-destructive: #f87171;
+  --color-ring: #7ea6d8;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-primary: #7ea6d8;
+    --color-primary-foreground: #0f172a;
+    --color-secondary: #60a5fa;
+    --color-accent: #d9a441;
+    --color-accent-foreground: #0f172a;
+    --color-background: #0b1220;
+    --color-foreground: #f1f5f9;
+    --color-muted: #16223a;
+    --color-muted-foreground: #94a3b8;
+    --color-border: #2a3a55;
+    --color-destructive: #f87171;
+    --color-ring: #7ea6d8;
+  }
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

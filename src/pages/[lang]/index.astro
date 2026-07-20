@@ -1,0 +1,33 @@
+---
+import SiteLayout from '../../components/templates/SiteLayout.astro';
+import Hero from '../../components/organisms/Hero.astro';
+import FacetsSection from '../../components/organisms/FacetsSection.astro';
+import Timeline from '../../components/organisms/Timeline.astro';
+import { LOCALES, type Locale } from '../../i18n/schema';
+import { getTranslator } from '../../lib/i18n';
+import { counterpartListPath } from '../../lib/routing';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Locale };
+const t = getTranslator(lang);
+
+const alternateLinks = {
+  fr: counterpartListPath('fr', 'home'),
+  en: counterpartListPath('en', 'home'),
+};
+---
+
+<SiteLayout
+  locale={lang}
+  currentSection="home"
+  alternateLinks={alternateLinks}
+  title={t('site.title')}
+  description={t('site.description')}
+>
+  <Hero locale={lang} />
+  <FacetsSection locale={lang} />
+  <Timeline locale={lang} />
+</SiteLayout>

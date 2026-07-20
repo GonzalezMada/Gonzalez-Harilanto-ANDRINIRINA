@@ -1,0 +1,78 @@
+---
+import ProjectCard from '../molecules/ProjectCard.astro';
+import CategoryFilter from '../molecules/CategoryFilter.astro';
+import type { Locale } from '../../i18n/schema';
+import { getTranslator } from '../../lib/i18n';
+
+interface ProjectItem {
+  title: string;
+  description: string;
+  technologies: string[];
+  externalLink: string;
+  category: string;
+}
+
+interface Props {
+  locale: Locale;
+  projects: ProjectItem[];
+}
+
+const { locale, projects } = Astro.props;
+const t = getTranslator(locale);
+const categories = [...new Set(projects.map((project) => project.category))].sort();
+---
+
+<div>
+  <CategoryFilter
+    categories={categories}
+    allLabel={t('projects.filterAllLabel')}
+    groupLabel={t('projects.filterGroupLabel')}
+  />
+  <div id="projects-grid" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    {
+      projects.map((project) => (
+        <div data-category={project.category}>
+          <ProjectCard
+            locale={locale}
+            title={project.title}
+            description={project.description}
+            technologies={project.technologies}
+            externalLink={project.externalLink}
+          />
+        </div>
+      ))
+    }
+  </div>
+  <p id="projects-empty-state" class="hidden py-8 text-center text-muted-foreground" role="status">
+    {t('projects.emptyState')}
+  </p>
+</div>
+
+<script>
+  import { projectMatchesCategory } from '../../lib/projectFilter';
+
+  const filterGroup = document.querySelector<HTMLElement>('[data-filter-group]');
+  const grid = document.getElementById('projects-grid');
+  const emptyState = document.getElementById('projects-empty-state');
+
+  if (filterGroup && grid && emptyState) {
+    filterGroup.addEventListener('click', (event) => {
+      const button = (event.target as HTMLElement)?.closest<HTMLElement>('[data-filter-value]');
+      if (!button) return;
+
+      const value = button.dataset.filterValue ?? 'all';
+      filterGroup.querySelectorAll('[data-filter-value]').forEach((candidate) => {
+        candidate.setAttribute('aria-pressed', String(candidate === button));
+      });
+
+      let visibleCount = 0;
+      grid.querySelectorAll<HTMLElement>('[data-category]').forEach((card) => {
+        const matches = projectMatchesCategory(card.dataset.category ?? '', value);
+        card.hidden = !matches;
+        if (matches) visibleCount += 1;
+      });
+
+      emptyState.classList.toggle('hidden', visibleCount > 0);
+    });
+  }
+</script>

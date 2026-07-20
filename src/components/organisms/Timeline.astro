@@ -1,0 +1,29 @@
+---
+import { TIMELINE } from '../../data/timeline';
+import type { Locale } from '../../i18n/schema';
+import { getTranslator } from '../../lib/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getTranslator(locale);
+---
+
+<section aria-labelledby="timeline-heading" class="py-8">
+  <h2 id="timeline-heading" class="mb-6 font-heading text-2xl font-semibold text-foreground">
+    {t('home.timelineHeading')}
+  </h2>
+  <ol class="flex flex-col gap-6 border-l-2 border-border pl-6">
+    {
+      TIMELINE.map((milestone) => (
+        <li class="relative">
+          <span class="absolute -left-[1.65rem] top-1 h-3 w-3 rounded-full bg-primary" />
+          <p class="font-heading text-sm font-semibold text-accent">{t(milestone.yearKey)}</p>
+          <p class="text-foreground">{t(milestone.labelKey)}</p>
+        </li>
+      ))
+    }
+  </ol>
+</section>

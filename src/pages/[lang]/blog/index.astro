@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import SiteLayout from '../../../components/templates/SiteLayout.astro';
+import BlogList from '../../../components/organisms/BlogList.astro';
+import { LOCALES, type Locale } from '../../../i18n/schema';
+import { getTranslator } from '../../../lib/i18n';
+import { counterpartListPath } from '../../../lib/routing';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Locale };
+const t = getTranslator(lang);
+
+const allArticles = await getCollection('blog');
+const articles = allArticles
+  .filter((entry) => entry.id.startsWith(`${lang}/`))
+  .map((entry) => ({
+    slug: entry.id.slice(lang.length + 1),
+    title: entry.data.title,
+    date: entry.data.date,
+    summary: entry.data.summary,
+    tags: entry.data.tags,
+  }));
+
+const alternateLinks = {
+  fr: counterpartListPath('fr', 'blog'),
+  en: counterpartListPath('en', 'blog'),
+};
+---
+
+<SiteLayout
+  locale={lang}
+  currentSection="blog"
+  alternateLinks={alternateLinks}
+  title={`${t('blog.heading')} — ${t('site.title')}`}
+  description={t('blog.intro')}
+>
+  <h1 class="mb-2 font-heading text-3xl font-bold text-foreground">{t('blog.heading')}</h1>
+  <p class="mb-8 text-muted-foreground">{t('blog.intro')}</p>
+  <BlogList locale={lang} articles={articles} />
+</SiteLayout>

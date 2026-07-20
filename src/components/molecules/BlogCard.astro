@@ -1,0 +1,45 @@
+---
+import type { Locale } from '../../i18n/schema';
+import { getTranslator } from '../../lib/i18n';
+
+interface Props {
+  locale: Locale;
+  href: string;
+  title: string;
+  date: Date;
+  summary: string;
+  tags: string[];
+}
+
+const { locale, href, title, date, summary, tags } = Astro.props;
+const t = getTranslator(locale);
+const formattedDate = new Intl.DateTimeFormat(locale === 'fr' ? 'fr-FR' : 'en-US', {
+  dateStyle: 'long',
+}).format(date);
+---
+
+<article class="flex flex-col gap-2 rounded-lg border border-border bg-background p-6 shadow-sm">
+  <time datetime={date.toISOString()} class="text-sm font-medium text-accent">{formattedDate}</time>
+  <h3 class="font-heading text-xl font-semibold text-foreground">
+    <a
+      href={href}
+      class="hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+    >
+      {title}
+    </a>
+  </h3>
+  <p class="text-muted-foreground">{summary}</p>
+  <ul class="flex flex-wrap gap-2">
+    {
+      tags.map((tag) => (
+        <li class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-foreground">{tag}</li>
+      ))
+    }
+  </ul>
+  <a
+    href={href}
+    class="mt-2 inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-primary transition-colors hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+  >
+    {t('blog.readMoreLabel')}
+  </a>
+</article>
