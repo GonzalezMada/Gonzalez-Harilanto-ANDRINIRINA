@@ -298,8 +298,9 @@ whole site rather than one story
       Girls, STEM for Good) with shared `translationKey` values in
       `src/content/fr/leadership/*.md` and `src/content/en/leadership/*.md`
 - [ ] T070 [P] Replace the placeholder CV PDFs with the real French and English CVs in
-      `public/cv/cv-fr.pdf` and `public/cv/cv-en.pdf`
-- [ ] T071 Run the full [quickstart.md](./quickstart.md) validation sequence locally and fix any
+      `public/cv/cv-fr.pdf` and `public/cv/cv-en.pdf` — `cv-fr.pdf` replaced with the real French
+      CV; `cv-en.pdf` still a placeholder, pending an up-to-date English CV from the user
+- [X] T071 Run the full [quickstart.md](./quickstart.md) validation sequence locally and fix any
       failures before the first deploy
 
 ---
