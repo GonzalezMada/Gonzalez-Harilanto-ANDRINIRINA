@@ -26,4 +26,9 @@ test.describe('Home page (US1)', () => {
     await page.getByRole('link', { name: /Étudiant-chercheur en vision artificielle/ }).click();
     await expect(page).toHaveURL(/\/fr\/blog\/$/);
   });
+
+  test('visiting the site root redirects to the French home page', async ({ page }) => {
+    await page.goto('');
+    await expect(page).toHaveURL(/\/fr\/$/);
+  });
 });
