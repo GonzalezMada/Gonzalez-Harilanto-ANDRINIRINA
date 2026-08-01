@@ -1,7 +1,7 @@
 {
   "site": {
     "title": "Gonzalez Harilanto ANDRINIRINA",
-    "description": "Personal portfolio — STEM education, AI engineering, and computer vision research."
+    "description": "Personal portfolio: STEM education, AI engineering, and computer vision research."
   },
   "nav": {
     "home": "Home",
@@ -9,7 +9,8 @@
     "blog": "Blog",
     "leadership": "Leadership",
     "downloadCv": "Download CV",
-    "skipToContent": "Skip to main content"
+    "skipToContent": "Skip to main content",
+    "toggleTheme": "Toggle theme"
   },
   "languageSwitcher": {
     "label": "Language",
@@ -20,7 +21,13 @@
     "heroEyebrow": "Portfolio",
     "heroTitle": "Gonzalez Harilanto ANDRINIRINA",
     "heroSubtitle": "STEM educator, AI engineer/developer, and computer vision research student.",
+    "heroValueProp": "I build applied AI and computer-vision systems, and mentor students stepping into STEM.",
     "heroCta": "View projects",
+    "heroCtaSecondary": "Contact",
+    "featuredHeading": "Selected work",
+    "featuredViewAll": "All projects",
+    "aboutHeading": "About",
+    "aboutBody": "I work at the intersection of applied AI, computer-vision research, and STEM education. As a research student I focus on real-time object detection and its deployment on constrained hardware. Alongside the technical work, I mentor young people and teams building their first projects, because access to STEM changes trajectories.",
     "facetsHeading": "Three facets, one mission",
     "facets": {
       "stemEducator": {
@@ -71,6 +78,12 @@
   "leadership": {
     "heading": "Leadership",
     "intro": "Mentoring and leadership experiences, and their human impact."
+  },
+  "footer": {
+    "contactHeading": "Contact",
+    "contactPrompt": "Reach out about research, engineering, or mentoring.",
+    "emailLabel": "Email",
+    "backToTop": "Back to top"
   },
   "cv": {
     "downloadLabel": "Download CV",

@@ -18,11 +18,12 @@ const {
 const Tag = href ? 'a' : 'button';
 
 const base =
-  'inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring';
+  'inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-semibold transition-[color,background-color,border-color,transform] duration-150 ease-out active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring';
 
 const variants = {
-  primary: 'bg-primary text-primary-foreground hover:bg-secondary',
-  secondary: 'border border-border bg-muted text-foreground hover:border-primary',
+  // hover shifts to a darker shade of the same navy, not a jarring hue jump.
+  primary: 'bg-primary text-primary-foreground hover:bg-primary-hover',
+  secondary: 'border border-border bg-surface text-foreground hover:border-primary hover:bg-muted',
 };
 ---
 

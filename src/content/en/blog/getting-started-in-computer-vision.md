@@ -1,7 +1,7 @@
 ---
 title: "Getting started in computer vision"
 date: 2024-03-10
-summary: "A practical overview of the fundamentals needed to get into computer vision — math, tools, and first projects."
+summary: "A practical overview of the fundamentals needed to get into computer vision: math, tools, and first projects."
 tags: ["Computer Vision", "Learning"]
 translationKey: "getting-started-computer-vision"
 ---

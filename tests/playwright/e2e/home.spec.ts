@@ -6,8 +6,10 @@ test.describe('Home page (US1)', () => {
 
     await expect(page.getByRole('img', { name: /Gonzalez Harilanto ANDRINIRINA/i })).toBeVisible();
 
-    const facetHeadings = page.getByRole('heading', { level: 3 });
-    await expect(facetHeadings).toHaveCount(3);
+    // The three profile facets live in their own section (the home page also
+    // surfaces a "Selected work" section with its own project headings).
+    const facets = page.locator('section[aria-labelledby="facets-heading"]');
+    await expect(facets.getByRole('heading', { level: 3 })).toHaveCount(3);
 
     await expect(page.getByRole('link', { name: 'Voir les projets' })).toBeVisible();
   });

@@ -1,4 +1,6 @@
 ---
+import Icon from '../atoms/Icon.astro';
+import ProjectThumb from './ProjectThumb.astro';
 import type { Locale } from '../../i18n/schema';
 import { getTranslator } from '../../lib/i18n';
 
@@ -8,36 +10,47 @@ interface Props {
   description: string;
   technologies: string[];
   externalLink: string;
+  category: string;
 }
 
-const { locale, title, description, technologies, externalLink } = Astro.props;
+const { locale, title, description, technologies, externalLink, category } = Astro.props;
 const t = getTranslator(locale);
+
+const shown = technologies.slice(0, 4);
+const extra = technologies.length - shown.length;
 ---
 
-<article class="flex h-full flex-col gap-3 rounded-lg border border-border bg-background p-6 shadow-sm">
-  <h3 class="font-heading text-lg font-semibold text-foreground">{title}</h3>
-  <p class="flex-1 text-sm text-muted-foreground">{description}</p>
-  <div>
-    <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-      {t('projects.technologiesLabel')}
-    </p>
+<article
+  class="group relative flex h-full flex-col overflow-hidden rounded-lg border border-border bg-surface transition-[transform,border-color,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:border-primary hover:shadow-md"
+>
+  <ProjectThumb title={title} category={category} />
+  <div class="flex flex-1 flex-col gap-3 p-5">
+    <p class="text-xs font-semibold uppercase tracking-wide text-accent">{category}</p>
+    <h3 class="font-heading text-lg font-semibold text-foreground transition-colors group-hover:text-primary">
+      {title}
+    </h3>
+    <p class="flex-1 text-sm text-muted-foreground">{description}</p>
     <ul class="flex flex-wrap gap-2">
       {
-        technologies.map((tech) => (
-          <li class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-foreground">
-            {tech}
-          </li>
+        shown.map((tech) => (
+          <li class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-foreground">{tech}</li>
         ))
       }
+      {
+        extra > 0 && (
+          <li class="rounded-full px-2 py-1 text-xs font-medium text-muted-foreground">+{extra}</li>
+        )
+      }
     </ul>
+    <a
+      href={externalLink}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="mt-1 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-primary transition-colors after:absolute after:inset-0 after:content-[''] hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+    >
+      {t('projects.viewProjectLabel')}
+      <Icon name="arrow-up-right" size={16} />
+      <span class="sr-only">{t('common.externalLinkNewTab')}</span>
+    </a>
   </div>
-  <a
-    href={externalLink}
-    target="_blank"
-    rel="noopener noreferrer"
-    class="mt-2 inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-primary transition-colors hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-  >
-    {t('projects.viewProjectLabel')}
-    <span class="sr-only">{t('common.externalLinkNewTab')}</span>
-  </a>
 </article>

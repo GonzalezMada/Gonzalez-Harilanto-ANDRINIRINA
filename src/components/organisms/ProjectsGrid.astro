@@ -38,6 +38,7 @@ const categories = [...new Set(projects.map((project) => project.category))].sor
             description={project.description}
             technologies={project.technologies}
             externalLink={project.externalLink}
+            category={project.category}
           />
         </div>
       ))
@@ -51,11 +52,12 @@ const categories = [...new Set(projects.map((project) => project.category))].sor
 <script>
   import { projectMatchesCategory } from '../../lib/projectFilter';
 
-  const filterGroup = document.querySelector<HTMLElement>('[data-filter-group]');
-  const grid = document.getElementById('projects-grid');
-  const emptyState = document.getElementById('projects-empty-state');
+  function initProjectFilter() {
+    const filterGroup = document.querySelector<HTMLElement>('[data-filter-group]');
+    const grid = document.getElementById('projects-grid');
+    const emptyState = document.getElementById('projects-empty-state');
+    if (!filterGroup || !grid || !emptyState) return;
 
-  if (filterGroup && grid && emptyState) {
     filterGroup.addEventListener('click', (event) => {
       const button = (event.target as HTMLElement)?.closest<HTMLElement>('[data-filter-value]');
       if (!button) return;
@@ -68,11 +70,23 @@ const categories = [...new Set(projects.map((project) => project.category))].sor
       let visibleCount = 0;
       grid.querySelectorAll<HTMLElement>('[data-category]').forEach((card) => {
         const matches = projectMatchesCategory(card.dataset.category ?? '', value);
+        const wasHidden = card.hidden;
         card.hidden = !matches;
-        if (matches) visibleCount += 1;
+        if (matches) {
+          visibleCount += 1;
+          // Retrigger the one-shot pop only for cards that were hidden before.
+          if (wasHidden) {
+            card.classList.remove('filter-in');
+            void card.offsetWidth;
+            card.classList.add('filter-in');
+          }
+        }
       });
 
       emptyState.classList.toggle('hidden', visibleCount > 0);
     });
   }
+
+  // Bind on first load and after every view-transition navigation.
+  document.addEventListener('astro:page-load', initProjectFilter);
 </script>

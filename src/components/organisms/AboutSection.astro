@@ -1,0 +1,27 @@
+---
+import type { Locale } from '../../i18n/schema';
+import { getTranslator } from '../../lib/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getTranslator(locale);
+---
+
+<section aria-labelledby="about-heading" class="border-t border-border py-12 md:py-16">
+  <div class="grid gap-4 md:grid-cols-12 md:gap-8">
+    <h2
+      id="about-heading"
+      class="reveal font-heading text-2xl font-semibold text-foreground md:col-span-4 md:text-3xl"
+    >
+      {t('home.aboutHeading')}
+    </h2>
+    <p
+      class="reveal max-w-2xl text-lg leading-relaxed text-muted-foreground md:col-span-8"
+    >
+      {t('home.aboutBody')}
+    </p>
+  </div>
+</section>

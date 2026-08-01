@@ -1,8 +1,11 @@
 ---
+import { Image } from 'astro:assets';
 import Button from '../atoms/Button.astro';
+import profileImage from '../../assets/profile.jpg';
 import type { Locale } from '../../i18n/schema';
 import { getTranslator } from '../../lib/i18n';
-import { localePath, withBase } from '../../lib/routing';
+import { localePath } from '../../lib/routing';
+import { SITE } from '../../data/site';
 
 interface Props {
   locale: Locale;
@@ -10,24 +13,49 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = getTranslator(locale);
-const photoSrc = withBase('/images/profile.jpg');
 const ctaHref = localePath(locale, 'projects');
 ---
 
-<section class="flex flex-col-reverse items-center gap-8 py-8 md:flex-row md:py-16">
-  <div class="flex flex-col items-start gap-4 text-center md:text-left">
-    <p class="font-semibold uppercase tracking-wide text-accent">{t('home.heroEyebrow')}</p>
-    <h1 class="font-heading text-4xl font-bold text-foreground md:text-5xl">
+<section class="grid items-center gap-10 py-12 md:grid-cols-12 md:gap-12 md:py-20">
+  <div class="flex flex-col items-start gap-5 md:col-span-7">
+    <p class="load-in text-sm font-semibold uppercase tracking-[0.14em] text-accent">
+      {SITE.jobTitle[locale]}
+    </p>
+    <h1
+      class="load-in font-heading text-4xl font-bold leading-[1.05] text-foreground md:text-5xl lg:text-[3.75rem]"
+      style="--reveal-delay:60ms"
+    >
       {t('home.heroTitle')}
     </h1>
-    <p class="max-w-xl text-lg text-muted-foreground">{t('home.heroSubtitle')}</p>
-    <Button href={ctaHref} variant="primary">{t('home.heroCta')}</Button>
+    <p
+      class="load-in max-w-xl text-lg leading-relaxed text-muted-foreground md:text-xl"
+      style="--reveal-delay:120ms"
+    >
+      {t('home.heroValueProp')}
+    </p>
+    <div class="load-in flex flex-wrap items-center gap-3 pt-1" style="--reveal-delay:180ms">
+      <Button href={ctaHref} variant="primary">{t('home.heroCta')}</Button>
+      <Button href="#contact" variant="secondary">{t('home.heroCtaSecondary')}</Button>
+    </div>
   </div>
-  <img
-    src={photoSrc}
-    alt={t('home.heroTitle')}
-    width="240"
-    height="240"
-    class="h-60 w-60 flex-shrink-0 rounded-full border-4 border-primary object-cover"
-  />
+
+  <div class="load-in md:col-span-5" style="--reveal-delay:120ms">
+    <div class="relative mx-auto w-full max-w-[16rem] sm:max-w-[18rem] md:max-w-none">
+      <span
+        aria-hidden="true"
+        class="absolute -bottom-3 -right-3 h-full w-full rounded-2xl border border-accent/40 bg-accent/10"
+      ></span>
+      <Image
+        src={profileImage}
+        alt={t('home.heroTitle')}
+        widths={[256, 384, 576, 768]}
+        sizes="(min-width: 768px) 24rem, 16rem"
+        format="webp"
+        quality={78}
+        loading="eager"
+        fetchpriority="high"
+        class="relative aspect-[4/5] w-full rounded-2xl border border-border object-cover shadow-lg"
+      />
+    </div>
+  </div>
 </section>

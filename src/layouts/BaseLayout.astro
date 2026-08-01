@@ -1,15 +1,49 @@
 ---
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 import type { Locale } from '../i18n/schema';
+import { LOCALES } from '../i18n/schema';
+import { withBase } from '../lib/routing';
+import { SITE } from '../data/site';
 
 interface Props {
   locale: Locale;
   title: string;
   description: string;
+  /** Absolute-or-relative counterpart URL per locale, for hreflang alternates. */
+  alternateLinks?: Record<Locale, string>;
 }
 
-const { locale, title, description } = Astro.props;
+const { locale, title, description, alternateLinks } = Astro.props;
+
 const favicon = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/favicon.svg`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(withBase(SITE.ogImage), Astro.site);
+
+const OG_LOCALE: Record<Locale, string> = { fr: 'fr_FR', en: 'en_US' };
+const otherLocale: Locale = locale === 'fr' ? 'en' : 'fr';
+
+const hreflangs = alternateLinks
+  ? [
+      ...LOCALES.map((loc) => ({
+        hreflang: loc,
+        href: new URL(alternateLinks[loc], Astro.site).href,
+      })),
+      { hreflang: 'x-default', href: new URL(alternateLinks.fr, Astro.site).href },
+    ]
+  : [];
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE.author,
+  url: canonical.href,
+  image: ogImage.href,
+  jobTitle: SITE.jobTitle[locale],
+  ...(SITE.github || SITE.linkedin
+    ? { sameAs: [SITE.github, SITE.linkedin].filter(Boolean) }
+    : {}),
+};
 ---
 
 <!doctype html>
@@ -17,11 +51,63 @@ const favicon = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/favicon.svg`;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href={favicon} />
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical.href} />
+    <link rel="icon" type="image/svg+xml" href={favicon} />
+    <meta name="theme-color" content="#1e3a5f" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)" />
+
+    {
+      hreflangs.map((alt) => (
+        <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
+      ))
+    }
+
+    {/* Open Graph */}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.author} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:image" content={ogImage.href} />
+    <meta property="og:locale" content={OG_LOCALE[locale]} />
+    <meta property="og:locale:alternate" content={OG_LOCALE[otherLocale]} />
+
+    {/* Twitter */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage.href} />
+
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+
+    {/* Set the stored theme before first paint to avoid a flash of the wrong
+        mode. Only an explicit choice is written; absent it, CSS follows the
+        system `prefers-color-scheme`. is:inline so it runs pre-hydration.
+        View Transitions re-sync the <html> attributes to the incoming page
+        (which has no data-theme), dropping our choice — so we also re-apply on
+        astro:after-swap, which runs post-swap but pre-paint (no flash). */}
+    <script is:inline>
+      (function () {
+        function applyTheme() {
+          try {
+            var t = localStorage.getItem('theme');
+            if (t === 'dark' || t === 'light') {
+              document.documentElement.dataset.theme = t;
+            } else {
+              delete document.documentElement.dataset.theme;
+            }
+          } catch {}
+        }
+        applyTheme();
+        document.addEventListener('astro:after-swap', applyTheme);
+      })();
+    </script>
+
+    <ClientRouter />
   </head>
-  <body class="min-h-screen bg-background text-foreground font-body antialiased">
+  <body class="min-h-dvh bg-background text-foreground font-body antialiased">
     <slot />
   </body>
 </html>

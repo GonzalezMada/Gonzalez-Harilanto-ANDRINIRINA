@@ -1,0 +1,60 @@
+---
+import ProjectCard from '../molecules/ProjectCard.astro';
+import Icon from '../atoms/Icon.astro';
+import type { Locale } from '../../i18n/schema';
+import { getTranslator } from '../../lib/i18n';
+import { localePath } from '../../lib/routing';
+
+interface ProjectItem {
+  title: string;
+  description: string;
+  technologies: string[];
+  externalLink: string;
+  category: string;
+}
+
+interface Props {
+  locale: Locale;
+  projects: ProjectItem[];
+}
+
+const { locale, projects } = Astro.props;
+const t = getTranslator(locale);
+const allHref = localePath(locale, 'projects');
+---
+
+<section aria-labelledby="featured-heading" class="border-t border-border py-12 md:py-16">
+  <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
+    <h2
+      id="featured-heading"
+      class="reveal font-heading text-2xl font-semibold text-foreground md:text-3xl"
+    >
+      {t('home.featuredHeading')}
+    </h2>
+    <a
+      href={allHref}
+      class="reveal group inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-primary transition-colors hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+    >
+      {t('home.featuredViewAll')}
+      <span class="transition-transform duration-200 ease-out group-hover:translate-x-0.5">
+        <Icon name="arrow-up-right" size={16} />
+      </span>
+    </a>
+  </div>
+  <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    {
+      projects.map((project) => (
+        <div class="reveal">
+          <ProjectCard
+            locale={locale}
+            title={project.title}
+            description={project.description}
+            technologies={project.technologies}
+            externalLink={project.externalLink}
+            category={project.category}
+          />
+        </div>
+      ))
+    }
+  </div>
+</section>
