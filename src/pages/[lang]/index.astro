@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import SiteLayout from '../../components/templates/SiteLayout.astro';
+import CreatureBackground from '../../components/organisms/CreatureBackground.astro';
 import Hero from '../../components/organisms/Hero.astro';
 import FeaturedWork from '../../components/organisms/FeaturedWork.astro';
 import FacetsSection from '../../components/organisms/FacetsSection.astro';
@@ -46,6 +47,7 @@ const alternateLinks = {
   title={t('site.title')}
   description={t('site.description')}
 >
+  <CreatureBackground />
   <Hero locale={lang} />
   <FeaturedWork locale={lang} projects={featuredProjects} />
   <FacetsSection locale={lang} />
