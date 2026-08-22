@@ -39,6 +39,14 @@ export interface Dictionary {
     heroValueProp: string;
     heroCta: string;
     heroCtaSecondary: string;
+    heroImages: {
+      educatorLabel: string;
+      educatorAlt: string;
+      profileLabel: string;
+      profileAlt: string;
+      leadershipLabel: string;
+      leadershipAlt: string;
+    };
     featuredHeading: string;
     featuredViewAll: string;
     aboutHeading: string;

@@ -24,6 +24,14 @@
     "heroValueProp": "I build applied AI and computer-vision systems, and mentor students stepping into STEM.",
     "heroCta": "View projects",
     "heroCtaSecondary": "Contact",
+    "heroImages": {
+      "educatorLabel": "STEM Educator & Coach",
+      "educatorAlt": "Gonzalez Harilanto ANDRINIRINA mentoring students during a STEM workshop",
+      "profileLabel": "AI Engineer & Developer",
+      "profileAlt": "Portrait of Gonzalez Harilanto ANDRINIRINA",
+      "leadershipLabel": "Leader",
+      "leadershipAlt": "Gonzalez Harilanto ANDRINIRINA in a leadership role"
+    },
     "featuredHeading": "Selected work",
     "featuredViewAll": "All projects",
     "aboutHeading": "About",

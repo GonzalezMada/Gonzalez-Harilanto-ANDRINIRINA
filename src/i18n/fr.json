@@ -24,6 +24,14 @@
     "heroValueProp": "Je conçois des systèmes d'IA et de vision par ordinateur appliqués, et j'accompagne la relève STEM.",
     "heroCta": "Voir les projets",
     "heroCtaSecondary": "Me contacter",
+    "heroImages": {
+      "educatorLabel": "Éducateur et coach STEM",
+      "educatorAlt": "Gonzalez Harilanto ANDRINIRINA encadrant des jeunes lors d'un atelier STEM",
+      "profileLabel": "Ingénieur et développeur IA",
+      "profileAlt": "Portrait de Gonzalez Harilanto ANDRINIRINA",
+      "leadershipLabel": "Leader",
+      "leadershipAlt": "Gonzalez Harilanto ANDRINIRINA dans un rôle de leadership"
+    },
     "featuredHeading": "Travaux sélectionnés",
     "featuredViewAll": "Tous les projets",
     "aboutHeading": "À propos",
