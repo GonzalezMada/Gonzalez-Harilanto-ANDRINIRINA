@@ -49,3 +49,6 @@ The Playwright visual suite compares full-page screenshots against baselines tha
   the refreshed Linux baselines to that branch and uploads them as an artifact. The
   images show up in the pull request diff, so they can be reviewed there. It can also be
   started manually from the Actions tab for any branch.
+- Because the baseline commit is authored by `github-actions[bot]`, GitHub puts the
+  pull request checks of that commit in the *action required* state: approve them once
+  ("Approve and run workflows") or push any new commit to restart the checks.
