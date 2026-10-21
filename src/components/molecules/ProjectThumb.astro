@@ -1,0 +1,50 @@
+---
+/*
+ * Generated project cover. There are no real project screenshots yet, so each
+ * card gets a deterministic brand-tinted cover (navy/gold only — palette stays
+ * locked) with the project's monogram. Not a fake screenshot: it is a
+ * typographic cover where the mark IS the content.
+ *
+ * TODO(owner): drop a real 16:10 screenshot per project and render it here
+ * instead (move the file to src/assets and use <Image>).
+ */
+interface Props {
+  title: string;
+  category: string;
+}
+
+const { title, category } = Astro.props;
+
+// Two-letter monogram from the first two meaningful words (skip FR/EN stopwords
+// so "Plateforme de suivi" reads "PS", not "PD").
+const STOPWORDS = new Set([
+  'de', 'du', 'des', 'la', 'le', 'les', 'l', 'd', 'un', 'une', 'et', 'en',
+  'a', 'au', 'aux', 'of', 'the', 'and', 'or', 'for', 'to', 'in', 'on',
+  'with', 'sur', 'pour', 'par',
+]);
+const words = title.toLowerCase().split(/[^a-zà-ÿ]+/).filter((w) => w && !STOPWORDS.has(w));
+const initials = (words.length ? words : title.trim().split(/\s+/))
+  .slice(0, 2)
+  .map((word) => word[0]?.toUpperCase() ?? '')
+  .join('');
+
+const gradients = [
+  'linear-gradient(135deg, var(--color-primary), var(--color-primary-hover))',
+  'linear-gradient(140deg, color-mix(in oklab, var(--color-primary) 80%, var(--color-accent)), var(--color-primary))',
+  'linear-gradient(155deg, var(--color-primary), color-mix(in oklab, var(--color-accent) 65%, var(--color-primary)))',
+];
+const pick = [...category].reduce((sum, ch) => sum + ch.charCodeAt(0), 0) % gradients.length;
+const background = gradients[pick];
+---
+
+<div
+  class="relative flex aspect-[16/10] items-center justify-center overflow-hidden"
+  style={`background:${background}`}
+>
+  <span
+    aria-hidden="true"
+    class="font-heading text-5xl font-bold tracking-tight text-primary-foreground/90"
+  >
+    {initials}
+  </span>
+</div>

@@ -1,8 +1,12 @@
 ---
+import { Image } from 'astro:assets';
 import Button from '../atoms/Button.astro';
+import educatorImage from '../../assets/educator.jpg';
+import profileImage from '../../assets/profile.jpg';
+import leadershipImage from '../../assets/leadership.jpg';
 import type { Locale } from '../../i18n/schema';
 import { getTranslator } from '../../lib/i18n';
-import { localePath, withBase } from '../../lib/routing';
+import { localePath } from '../../lib/routing';
 
 interface Props {
   locale: Locale;
@@ -10,24 +14,115 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = getTranslator(locale);
-const photoSrc = withBase('/images/profile.jpg');
 const ctaHref = localePath(locale, 'projects');
 ---
 
-<section class="flex flex-col-reverse items-center gap-8 py-8 md:flex-row md:py-16">
-  <div class="flex flex-col items-start gap-4 text-center md:text-left">
-    <p class="font-semibold uppercase tracking-wide text-accent">{t('home.heroEyebrow')}</p>
-    <h1 class="font-heading text-4xl font-bold text-foreground md:text-5xl">
+<section class="grid items-center gap-10 py-12 md:grid-cols-12 md:gap-12 md:py-20">
+  <div class="flex flex-col items-start gap-5 md:col-span-4">
+    <h1
+      class="load-in font-heading text-3xl font-bold leading-[1.05] text-foreground md:text-4xl lg:text-5xl"
+      style="--reveal-delay:60ms"
+    >
       {t('home.heroTitle')}
     </h1>
-    <p class="max-w-xl text-lg text-muted-foreground">{t('home.heroSubtitle')}</p>
-    <Button href={ctaHref} variant="primary">{t('home.heroCta')}</Button>
+    <p
+      class="load-in max-w-xl text-lg leading-relaxed text-muted-foreground md:text-xl"
+      style="--reveal-delay:120ms"
+    >
+      {t('home.heroValueProp')}
+    </p>
+    <div class="load-in flex flex-wrap items-center gap-3 pt-1" style="--reveal-delay:180ms">
+      <Button href={ctaHref} variant="primary">{t('home.heroCta')}</Button>
+      <Button href="#contact" variant="secondary">{t('home.heroCtaSecondary')}</Button>
+    </div>
   </div>
-  <img
-    src={photoSrc}
-    alt={t('home.heroTitle')}
-    width="240"
-    height="240"
-    class="h-60 w-60 flex-shrink-0 rounded-full border-4 border-primary object-cover"
-  />
+
+  <div class="load-in md:col-span-8" style="--reveal-delay:120ms">
+    <div class="mx-auto grid w-full max-w-[42rem] grid-cols-[1fr_1.25fr_1fr] items-end gap-3 sm:gap-4 md:max-w-none">
+      <figure class="m-0">
+        <div class="facet-photo facet-photo--left overflow-hidden rounded-2xl border border-border shadow-lg">
+          <Image
+            src={educatorImage}
+            alt={t('home.heroImages.educatorAlt')}
+            widths={[280, 400, 560, 800]}
+            sizes="(min-width: 768px) 11rem, 7rem"
+            format="webp"
+            quality={88}
+            loading="eager"
+            class="aspect-[4/5] w-full object-cover"
+          />
+        </div>
+        <figcaption
+          class="mt-2 text-center text-[0.65rem] font-semibold uppercase tracking-wide text-muted-foreground sm:text-xs"
+        >
+          {t('home.heroImages.educatorLabel')}
+        </figcaption>
+      </figure>
+
+      <figure class="m-0">
+        <div class="facet-photo relative overflow-hidden rounded-2xl border border-border shadow-lg">
+          <Image
+            src={profileImage}
+            alt={t('home.heroImages.profileAlt')}
+            widths={[300, 450, 650, 900]}
+            sizes="(min-width: 768px) 16rem, 10rem"
+            format="webp"
+            quality={78}
+            loading="eager"
+            fetchpriority="high"
+            class="relative aspect-[4/5] w-full object-cover"
+          />
+        </div>
+        <figcaption class="mt-2 text-center text-xs font-semibold uppercase tracking-wide text-accent sm:text-sm">
+          {t('home.heroImages.profileLabel')}
+        </figcaption>
+      </figure>
+
+      <figure class="m-0">
+        <div class="facet-photo facet-photo--right overflow-hidden rounded-2xl border border-border shadow-lg">
+          <Image
+            src={leadershipImage}
+            alt={t('home.heroImages.leadershipAlt')}
+            widths={[280, 400, 560, 800]}
+            sizes="(min-width: 768px) 11rem, 7rem"
+            format="webp"
+            quality={88}
+            loading="eager"
+            class="aspect-[4/5] w-full object-cover"
+          />
+        </div>
+        <figcaption
+          class="mt-2 text-center text-[0.65rem] font-semibold uppercase tracking-wide text-muted-foreground sm:text-xs"
+        >
+          {t('home.heroImages.leadershipLabel')}
+        </figcaption>
+      </figure>
+    </div>
+  </div>
 </section>
+
+<style>
+  /* Side portraits sit tilted at rest, framing the centered profile shot;
+     hovering/focusing straightens a photo forward, a small interactive nod
+     to the "three facets, one person" idea. prefers-reduced-motion already
+     zeroes all transition-durations globally (global.css), so this degrades
+     to an instant state change rather than a spin for motion-sensitive users. */
+  .facet-photo {
+    transition: transform 0.4s var(--ease-out);
+  }
+
+  .facet-photo--left {
+    transform: rotate(-6deg);
+  }
+
+  .facet-photo--right {
+    transform: rotate(6deg);
+  }
+
+  .facet-photo--left:hover,
+  .facet-photo--left:focus-within,
+  .facet-photo--right:hover,
+  .facet-photo--right:focus-within {
+    transform: rotate(0deg) scale(1.04);
+  }
+</style>

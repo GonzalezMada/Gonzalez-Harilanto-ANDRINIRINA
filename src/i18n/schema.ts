@@ -25,6 +25,7 @@ export interface Dictionary {
     leadership: string;
     downloadCv: string;
     skipToContent: string;
+    toggleTheme: string;
   };
   languageSwitcher: {
     label: string;
@@ -35,7 +36,21 @@ export interface Dictionary {
     heroEyebrow: string;
     heroTitle: string;
     heroSubtitle: string;
+    heroValueProp: string;
     heroCta: string;
+    heroCtaSecondary: string;
+    heroImages: {
+      educatorLabel: string;
+      educatorAlt: string;
+      profileLabel: string;
+      profileAlt: string;
+      leadershipLabel: string;
+      leadershipAlt: string;
+    };
+    featuredHeading: string;
+    featuredViewAll: string;
+    aboutHeading: string;
+    aboutBody: string;
     facetsHeading: string;
     facets: {
       stemEducator: { label: string; summary: string };
@@ -68,6 +83,12 @@ export interface Dictionary {
   leadership: {
     heading: string;
     intro: string;
+  };
+  footer: {
+    contactHeading: string;
+    contactPrompt: string;
+    emailLabel: string;
+    backToTop: string;
   };
   cv: {
     downloadLabel: string;

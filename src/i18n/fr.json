@@ -1,7 +1,7 @@
 {
   "site": {
     "title": "Gonzalez Harilanto ANDRINIRINA",
-    "description": "Portfolio personnel — éducation STEM, ingénierie IA et recherche en vision artificielle."
+    "description": "Portfolio personnel : éducation STEM, ingénierie IA et recherche en vision artificielle."
   },
   "nav": {
     "home": "Accueil",
@@ -9,7 +9,8 @@
     "blog": "Blog",
     "leadership": "Leadership",
     "downloadCv": "Télécharger le CV",
-    "skipToContent": "Aller au contenu principal"
+    "skipToContent": "Aller au contenu principal",
+    "toggleTheme": "Basculer le thème"
   },
   "languageSwitcher": {
     "label": "Langue",
@@ -20,7 +21,21 @@
     "heroEyebrow": "Portfolio",
     "heroTitle": "Gonzalez Harilanto ANDRINIRINA",
     "heroSubtitle": "Éducateur STEM, ingénieur/développeur IA et étudiant-chercheur en vision artificielle.",
+    "heroValueProp": "Je développe des solutions IA pour maximiser la performance des entreprises tout en accompagnant la relève STEM.",
     "heroCta": "Voir les projets",
+    "heroCtaSecondary": "Me contacter",
+    "heroImages": {
+      "educatorLabel": "Éducateur et coach STEM",
+      "educatorAlt": "Gonzalez Harilanto ANDRINIRINA encadrant des jeunes lors d'un atelier STEM",
+      "profileLabel": "Ingénieur et développeur IA",
+      "profileAlt": "Portrait de Gonzalez Harilanto ANDRINIRINA",
+      "leadershipLabel": "Leader",
+      "leadershipAlt": "Gonzalez Harilanto ANDRINIRINA dans un rôle de leadership"
+    },
+    "featuredHeading": "Travaux sélectionnés",
+    "featuredViewAll": "Tous les projets",
+    "aboutHeading": "À propos",
+    "aboutBody": "Je travaille à la croisée de l'IA appliquée, de la recherche en vision par ordinateur et de l'éducation STEM. En tant qu'étudiant-chercheur, je me concentre sur la détection d'objets en temps réel et son déploiement sur du matériel embarqué. En parallèle, j'accompagne des jeunes et des équipes qui construisent leurs premiers projets, parce que l'accès aux STEM change des trajectoires.",
     "facetsHeading": "Trois facettes, une même mission",
     "facets": {
       "stemEducator": {
@@ -71,6 +86,12 @@
   "leadership": {
     "heading": "Leadership",
     "intro": "Expériences d'encadrement et de mentorat, et leur impact humain."
+  },
+  "footer": {
+    "contactHeading": "Contact",
+    "contactPrompt": "Écrivez-moi au sujet de recherche, d'ingénierie ou de mentorat.",
+    "emailLabel": "E-mail",
+    "backToTop": "Haut de page"
   },
   "cv": {
     "downloadLabel": "Télécharger le CV",

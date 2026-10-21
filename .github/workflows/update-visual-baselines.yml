@@ -1,0 +1,76 @@
+name: Update visual baselines
+
+# The Playwright visual suite compares full-page screenshots against
+# platform-specific baselines (`*-chromium-linux.png` / `*-chromium-win32.png`).
+# A Linux baseline can only be produced by Chromium running on Linux, so the
+# refresh has to happen on a GitHub runner.
+#
+# The workflow commits the refreshed Linux baselines to the target branch, so
+# the images show up in the pull request diff and can be reviewed there.
+# Nothing is committed when the rendering did not change.
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to regenerate the visual baselines on'
+        required: true
+        default: 'dev'
+        type: string
+  push:
+    branches: [dev]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-visual-baselines-${{ github.event_name == 'workflow_dispatch' && inputs.branch || github.ref_name }}
+  cancel-in-progress: true
+
+env:
+  TARGET_BRANCH: ${{ github.event_name == 'workflow_dispatch' && inputs.branch || github.ref_name }}
+
+jobs:
+  update:
+    name: Regenerate the Linux baselines
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TARGET_BRANCH }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+
+      - name: Regenerate the Linux snapshots
+        run: npx playwright test tests/playwright/visual --update-snapshots
+        env:
+          CI: true
+
+      - name: Keep the baselines of the other platforms untouched
+        run: git checkout -- 'tests/playwright/visual/*-snapshots/*-win32.png' || true
+
+      - name: Commit the refreshed baselines
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- 'tests/playwright/visual'
+          if git diff --cached --quiet; then
+            echo "No baseline change to commit."
+          else
+            git commit -m "chore(visual): refresh the Linux Playwright baselines"
+            git push origin "HEAD:$TARGET_BRANCH"
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: linux-visual-baselines
+          path: tests/playwright/visual/*-snapshots/*.png
+          retention-days: 7

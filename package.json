@@ -19,7 +19,10 @@
     "lint:content": "node scripts/lint-content.mjs"
   },
   "dependencies": {
+    "@fontsource/atkinson-hyperlegible": "^5.3.0",
+    "@fontsource/crimson-pro": "^5.3.0",
     "@tailwindcss/vite": "^4.3.3",
+    "animejs": "^4.5.0",
     "astro": "^7.1.2",
     "tailwindcss": "^4.3.3"
   },

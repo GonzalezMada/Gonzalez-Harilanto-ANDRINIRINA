@@ -1,11 +1,14 @@
 import { test, expect } from '@playwright/test';
+import { countEntries } from '../helpers/content';
 
 test.describe('Blog (US6)', () => {
   test('the list shows title, date, summary, and tags for each article', async ({ page }) => {
     await page.goto('fr/blog/');
 
     const cards = page.locator('article');
-    await expect(cards).toHaveCount(2);
+    // Every published article is listed: the collection is meant to grow
+    // without touching the tests (FR-015).
+    await expect(cards).toHaveCount(countEntries('fr', 'blog'));
 
     const first = cards.first();
     await expect(first.locator('time')).toBeVisible();

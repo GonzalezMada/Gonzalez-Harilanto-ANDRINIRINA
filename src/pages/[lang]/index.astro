@@ -1,7 +1,11 @@
 ---
+import { getCollection } from 'astro:content';
 import SiteLayout from '../../components/templates/SiteLayout.astro';
+import CreatureBackground from '../../components/organisms/CreatureBackground.astro';
 import Hero from '../../components/organisms/Hero.astro';
+import FeaturedWork from '../../components/organisms/FeaturedWork.astro';
 import FacetsSection from '../../components/organisms/FacetsSection.astro';
+import AboutSection from '../../components/organisms/AboutSection.astro';
 import Timeline from '../../components/organisms/Timeline.astro';
 import { LOCALES, type Locale } from '../../i18n/schema';
 import { getTranslator } from '../../lib/i18n';
@@ -13,6 +17,22 @@ export function getStaticPaths() {
 
 const { lang } = Astro.params as { lang: Locale };
 const t = getTranslator(lang);
+
+const allProjects = await getCollection('projects');
+const featuredProjects = allProjects
+  .filter((entry) => entry.id.startsWith(`${lang}/`))
+  .sort(
+    (a, b) =>
+      (a.data.order ?? 0) - (b.data.order ?? 0) || a.data.title.localeCompare(b.data.title),
+  )
+  .slice(0, 3)
+  .map((entry) => ({
+    title: entry.data.title,
+    description: entry.data.description,
+    technologies: entry.data.technologies,
+    externalLink: entry.data.externalLink,
+    category: entry.data.category,
+  }));
 
 const alternateLinks = {
   fr: counterpartListPath('fr', 'home'),
@@ -27,7 +47,10 @@ const alternateLinks = {
   title={t('site.title')}
   description={t('site.description')}
 >
+  <CreatureBackground />
   <Hero locale={lang} />
+  <FeaturedWork locale={lang} projects={featuredProjects} />
   <FacetsSection locale={lang} />
+  <AboutSection locale={lang} />
   <Timeline locale={lang} />
 </SiteLayout>

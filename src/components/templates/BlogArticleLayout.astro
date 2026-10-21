@@ -1,4 +1,5 @@
 ---
+import Icon from '../atoms/Icon.astro';
 import type { Locale } from '../../i18n/schema';
 import { getTranslator } from '../../lib/i18n';
 
@@ -20,9 +21,12 @@ const formattedDate = new Intl.DateTimeFormat(locale === 'fr' ? 'fr-FR' : 'en-US
 <article>
   <a
     href={backToListHref}
-    class="mb-6 inline-flex min-h-11 items-center text-sm font-semibold text-primary transition-colors hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+    class="group mb-6 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-primary transition-colors hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
   >
-    &larr; {t('blog.backToListLabel')}
+    <span class="transition-transform duration-200 ease-out group-hover:-translate-x-0.5">
+      <Icon name="arrow-left" size={16} />
+    </span>
+    {t('blog.backToListLabel')}
   </a>
   <header class="mb-8">
     <time datetime={date.toISOString()} class="text-sm font-medium text-accent">{formattedDate}</time>
@@ -35,7 +39,7 @@ const formattedDate = new Intl.DateTimeFormat(locale === 'fr' ? 'fr-FR' : 'en-US
       }
     </ul>
   </header>
-  <div class="prose prose-slate max-w-none">
+  <div class="prose max-w-none">
     <slot />
   </div>
 </article>

@@ -3,6 +3,8 @@ dist/
 # generated types
 .astro/
 
+.claude/skills/
+
 # dependencies
 node_modules/
 
@@ -31,3 +33,4 @@ test-results/
 playwright-report/
 blob-report/
 .lighthouseci/
+.legacy-stash/

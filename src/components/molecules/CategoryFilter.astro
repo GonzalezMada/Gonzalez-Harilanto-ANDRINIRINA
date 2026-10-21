@@ -8,7 +8,8 @@ interface Props {
 const { categories, allLabel, groupLabel } = Astro.props;
 
 const chipClass =
-  'min-h-11 rounded-full border border-border px-4 py-2 text-sm font-medium transition-colors ' +
+  'min-h-11 rounded-full border border-border px-4 py-2 text-sm font-medium ' +
+  'transition-[color,background-color,border-color,transform] duration-150 ease-out active:scale-[0.97] ' +
   'hover:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring ' +
   'aria-pressed:border-primary aria-pressed:bg-primary aria-pressed:text-primary-foreground';
 ---
