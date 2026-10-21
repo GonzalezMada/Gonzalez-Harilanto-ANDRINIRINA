@@ -4,7 +4,12 @@ test.describe('Home page (US1)', () => {
   test('renders the professional photo, exactly 3 facets, and a CTA', async ({ page }) => {
     await page.goto('fr/');
 
-    await expect(page.getByRole('img', { name: /Gonzalez Harilanto ANDRINIRINA/i })).toBeVisible();
+    // The Hero now shows a triptych (educator / profile / leadership) and every
+    // one of those photos mentions the owner, so the professional portrait has
+    // to be targeted with its exact accessible name.
+    await expect(
+      page.getByRole('img', { name: 'Portrait de Gonzalez Harilanto ANDRINIRINA', exact: true }),
+    ).toBeVisible();
 
     // The three profile facets live in their own section (the home page also
     // surfaces a "Selected work" section with its own project headings).
