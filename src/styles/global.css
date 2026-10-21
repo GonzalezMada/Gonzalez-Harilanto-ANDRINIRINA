@@ -10,6 +10,7 @@
 @import '@fontsource/crimson-pro/latin-800.css';
 
 @import 'tailwindcss';
+@config '../../tailwind.config.mjs';   /* path is relative to src/styles/ */
 @plugin '@tailwindcss/typography';
 
 /*
