@@ -3,8 +3,11 @@ name: Update visual baselines
 # The Playwright visual suite compares full-page screenshots against
 # platform-specific baselines (`*-chromium-linux.png` / `*-chromium-win32.png`).
 # A Linux baseline can only be produced by Chromium running on Linux, so the
-# refresh has to happen on a GitHub runner. Run this workflow manually whenever
-# the design changes, then let the regular CI job verify the result.
+# refresh has to happen on a GitHub runner.
+#
+# The workflow commits the refreshed Linux baselines to the target branch, so
+# the images show up in the pull request diff and can be reviewed there.
+# Nothing is committed when the rendering did not change.
 
 on:
   workflow_dispatch:
@@ -14,13 +17,18 @@ on:
         required: true
         default: 'dev'
         type: string
+  push:
+    branches: [dev]
 
 permissions:
   contents: write
 
 concurrency:
-  group: update-visual-baselines-${{ github.event.inputs.branch }}
+  group: update-visual-baselines-${{ github.event_name == 'workflow_dispatch' && inputs.branch || github.ref_name }}
   cancel-in-progress: true
+
+env:
+  TARGET_BRANCH: ${{ github.event_name == 'workflow_dispatch' && inputs.branch || github.ref_name }}
 
 jobs:
   update:
@@ -29,7 +37,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.inputs.branch }}
+          ref: ${{ env.TARGET_BRANCH }}
 
       - uses: actions/setup-node@v4
         with:
@@ -57,7 +65,7 @@ jobs:
             echo "No baseline change to commit."
           else
             git commit -m "chore(visual): refresh the Linux Playwright baselines"
-            git push origin "HEAD:${{ github.event.inputs.branch }}"
+            git push origin "HEAD:$TARGET_BRANCH"
           fi
 
       - uses: actions/upload-artifact@v4

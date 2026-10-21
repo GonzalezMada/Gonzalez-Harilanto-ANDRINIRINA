@@ -44,7 +44,8 @@ The Playwright visual suite compares full-page screenshots against baselines tha
   npx playwright test tests/playwright/visual --update-snapshots
   ```
 - A Linux baseline can only be produced by Chromium running on Linux, so it has to be
-  regenerated on a GitHub runner: run the **Update visual baselines** workflow
-  (`.github/workflows/update-visual-baselines.yml`) and pick the branch to update. The
-  workflow commits the refreshed Linux baselines to that branch and uploads them as an
-  artifact.
+  regenerated on a GitHub runner. The **Update visual baselines** workflow
+  (`.github/workflows/update-visual-baselines.yml`) runs on every push to `dev`, commits
+  the refreshed Linux baselines to that branch and uploads them as an artifact. The
+  images show up in the pull request diff, so they can be reviewed there. It can also be
+  started manually from the Actions tab for any branch.
